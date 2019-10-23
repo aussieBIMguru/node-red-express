@@ -5,6 +5,19 @@
         width: 100%;
         page-break-inside: auto !important;
     }
+    .confidential {
+        width: calc(100% + 2rem);
+        position: relative;
+        left: -1rem;
+        top: -1rem;
+        background-color: #f99;
+        color: #000;
+        text-align: center;
+        vertical-align: middle;
+        height: 15px;
+        line-height: 15px;
+    }
+
     .footer {
         line-height: 10px;
         font-size: 8px;
@@ -40,6 +53,13 @@
     td,th {
         font-size: 1rem;
         padding: 0.75rem 0.5rem;
+    }
+
+    .person, .clip {
+        vertical-align: middle;
+    }
+    .clip {
+        margin-right: 5px;
     }
     tr {
         border-top: 1px solid #2e2f31;
@@ -149,22 +169,30 @@
         <table style="height:30px">
         <tr>
         <td nowrap>
-            <div >{{ FirstName }} {{ LastName }}</div>
-            <div >{{ OrganizationName }}</div>
+            {{ #FromUserDetails }}
+            <div>{{ FirstName }} {{ LastName }} ({{ OrganizationName }})</div>
+            {{ /FromUserDetails }}
+            <div>{{ Subject }} ({{ CorrespondenceType }})</div>
         </td>
         <td nowrap>
-            <div>{{ Subject }}</div>
-            <div>{{ CorrespondenceType }}</div>
+            {{ #AttachmentCount }}
+            {{.}}
+            <img width=10 height=10 class="clip" />
+            {{ /AttachmentCount }}
+            {{ #Recipients.length }}
+            {{.}}
+            <img width=10 height=10 class="person" />
+            {{ /Recipients.length }}
         </td>
         <td nowrap>
             <div>{{ SentDate }}</div>
             <div>{{ MailNo }}</div>
         </td>
         <td>
-            {{ Status }}
+            <div>{{ Status }}</div>
+            <div style="font-style: italic">Page <span id="card_pagenum_{{ index }}"></span></div>
         </td>
         <td>
-            Page <span id="card_pagenum_{{ index }}"></span>
         </td>
         </tr>
         </table>
@@ -176,6 +204,9 @@
 <div id="messages">
 {{ #messages }}
 <div id="card_{{ index }}" class="card">
+{{ #ConfidentialFlag }}
+    <div class="confidential">CONFIDENTIAL</div>
+{{ /ConfidentialFlag }}
     <div class="metadata_header">
         <div>
             <div class="meta_attr">
@@ -213,10 +244,12 @@
                 From
             </div>
             <div class="value">
+                {{ #FromUserDetails }}
                 {{ FirstName }} {{ LastName }} - {{ OrganizationName }}
+                {{ /FromUserDetails }}
             </div>
         </div>
-{{ #Recipient }}
+{{ #Recipients }}
         <div>
             <div class="label">
                 {{ DistributionType }}
@@ -225,7 +258,7 @@
                 {{ FirstName }} {{ LastName }} - {{ OrganizationName }}
             </div>
         </div>
-{{ /Recipient }}
+{{ /Recipients }}
         <div>
             <div class="label">
                 Sent
@@ -244,6 +277,7 @@
         </div>
     </div>
 
+{{ #Attachments }}
 {{ #MailAttachment.length }}
     <div class="section_header">Mail Attachments:</div>
     <table>
@@ -281,6 +315,7 @@
 {{ #LocalFileAttachment.length }}
     </table>
 {{ /LocalFileAttachment.length }}
+{{ /Attachments }}
     <div class="section_header">Message</div>
     <iframe id="iframe_{{ index }}" srcdoc="{{ SanitizedData }}" >afaffdfaff</iframe>
     <div id="content_{{ index }}">
@@ -293,7 +328,24 @@
 <div id="pageFooter" class="footer">Page {{=<% %>=}} {{page}} of {{pages}} <%={{ }}=%></div>
 <div id="pageHeader" class="header"></div>
 <script type="text/javascript">
+
 function onLoad() {
+    const clip = "{{{base}}}/Clip-01.svg";
+    const person = "{{{base}}}/Person-01.svg";
+
+    const clipImages = document.getElementsByClassName('clip')
+    
+    for(var i = 0; i < clipImages.length; i++){ 
+        clipImages[i].src = clip;
+    }
+
+    const personImages = document.getElementsByClassName('person')
+    
+    for(var i = 0; i < personImages.length; i++){ 
+        personImages[i].src = person;
+    }
+
+
     var pageElement = document.getElementById("page");
     var pageHeight = pageElement.clientHeight - 20 - 20;
     pageElement.remove();
