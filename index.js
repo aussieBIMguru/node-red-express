@@ -25,7 +25,7 @@ function getSettings(envs){
 
 function startNR(settings) {
   console.log(`[INFO] Global settings for Node-Red: ${JSON.stringify(settings.functionGlobalContext)}`)
-  const port = 8000
+  const port = 8001
 
   RED.init(server, settings)
 
