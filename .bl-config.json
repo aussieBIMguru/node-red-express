@@ -1,10 +1,10 @@
 {
   "env": {
     "Example":true,
-    "FORGE_ACCESS": "",
+    "FORGE_ACCESS": "eyJhbGciOiJIUzI1NiIsImtpZCI6Imp3dF9zeW1tZXRyaWNfa2V5In0.eyJ1c2VyaWQiOiI4RVlUUU01NjRDVVEiLCJleHAiOjE1NzI0NTM3MDQsInNjb3BlIjpbImRhdGE6Y3JlYXRlIiwiZGF0YTp3cml0ZSIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiXSwiY2xpZW50X2lkIjoiZTNJM0RJMEx0VzFLcGdLaUJZcEdwR01XRFphTmxBZEwiLCJncmFudF9pZCI6IldnUWhKWVBtREVzQk14MjFPVnNUVkExWGJ4enNaUW9EIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2p3dGV4cDYwIiwianRpIjoiVTJrTWpLTjdYNkVPUmxxN1NTR2M1UmxqSTNFYlVxUTFyZExWbk9CUElWTnB1SFlSdmhXYk9iTWd6UDlyUGUxeCJ9.sHfM9Uc0Tu7ujiuAoRc4l0ZTgo3YwyUzl4q7lqeRIYo",
     "FORGE_AUTH_SCOPES": ["data:create","data:write","data:read","bucket:read","bucket:update","bucket:create"],
-    "FORGE_CLIENT_ID": "",
-    "FORGE_CLIENT_SECRET": "",
+    "FORGE_CLIENT_ID": "e3I3DI0LtW1KpgKiBYpGpGMWDZaNlAdL",
+    "FORGE_CLIENT_SECRET": "Pltf1DpVcbzxK9ry",
     "FORGE_CALLBACK_URL": "http://localhost:8000/callback",
     "FORGE_HUB_ID": "a.cGVyc29uYWw6dWUyY2I3MmQ2",
     "FORGE_PROJECT_ID": "a.cGVyc29uYWw6dWUyOWNlMGZlIzIwMTkwNDE2MTg4NzIzMTMx",

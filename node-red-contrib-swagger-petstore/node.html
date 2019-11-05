@@ -1,0 +1,881 @@
+<script type="text/javascript">
+    RED.nodes.registerType('swagger-petstore', {
+        category: 'function',
+        color: '#89bf04',
+        defaults: {
+            service: { value: "", type: "swagger-petstore-service", required: true },
+            method: { value: "", required: true },
+            addPet_body: { value: "" },
+            addPet_bodyType: { value: "str" },
+            updatePet_body: { value: "" },
+            updatePet_bodyType: { value: "str" },
+            findPetsByStatus_status: { value: "" },
+            findPetsByStatus_statusType: { value: "str" },
+            findPetsByTags_tags: { value: "" },
+            findPetsByTags_tagsType: { value: "str" },
+            getPetById_petId: { value: "" },
+            getPetById_petIdType: { value: "str" },
+            updatePetWithForm_petId: { value: "" },
+            updatePetWithForm_petIdType: { value: "str" },
+            updatePetWithForm_name: { value: "" },
+            updatePetWithForm_nameType: { value: "str" },
+            updatePetWithForm_status: { value: "" },
+            updatePetWithForm_statusType: { value: "str" },
+            deletePet_apiKey: { value: "" },
+            deletePet_apiKeyType: { value: "str" },
+            deletePet_petId: { value: "" },
+            deletePet_petIdType: { value: "str" },
+            uploadFile_petId: { value: "" },
+            uploadFile_petIdType: { value: "str" },
+            uploadFile_additionalMetadata: { value: "" },
+            uploadFile_additionalMetadataType: { value: "str" },
+            uploadFile_file: { value: "" },
+            uploadFile_fileType: { value: "str" },
+            placeOrder_body: { value: "" },
+            placeOrder_bodyType: { value: "str" },
+            getOrderById_orderId: { value: "" },
+            getOrderById_orderIdType: { value: "str" },
+            deleteOrder_orderId: { value: "" },
+            deleteOrder_orderIdType: { value: "str" },
+            createUser_body: { value: "" },
+            createUser_bodyType: { value: "str" },
+            createUsersWithArrayInput_body: { value: "" },
+            createUsersWithArrayInput_bodyType: { value: "str" },
+            createUsersWithListInput_body: { value: "" },
+            createUsersWithListInput_bodyType: { value: "str" },
+            loginUser_username: { value: "" },
+            loginUser_usernameType: { value: "str" },
+            loginUser_password: { value: "" },
+            loginUser_passwordType: { value: "str" },
+            getUserByName_username: { value: "" },
+            getUserByName_usernameType: { value: "str" },
+            updateUser_username: { value: "" },
+            updateUser_usernameType: { value: "str" },
+            updateUser_body: { value: "" },
+            updateUser_bodyType: { value: "str" },
+            deleteUser_username: { value: "" },
+            deleteUser_usernameType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.png',
+        label: function () {
+            return this.name || "swagger-petstore";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-addPet_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-addPet_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#addPet_body").hide();
+
+                $("#node-input-updatePet_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updatePet_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updatePet_body").hide();
+
+                $("#node-input-findPetsByStatus_status").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-findPetsByStatus_statusType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#findPetsByStatus_status").hide();
+
+                $("#node-input-findPetsByTags_tags").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-findPetsByTags_tagsType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#findPetsByTags_tags").hide();
+
+                $("#node-input-getPetById_petId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getPetById_petIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getPetById_petId").hide();
+
+                $("#node-input-updatePetWithForm_petId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updatePetWithForm_petIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updatePetWithForm_petId").hide();
+
+                $("#node-input-updatePetWithForm_name").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updatePetWithForm_nameType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updatePetWithForm_name").hide();
+
+                $("#node-input-updatePetWithForm_status").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updatePetWithForm_statusType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updatePetWithForm_status").hide();
+
+                $("#node-input-deletePet_apiKey").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deletePet_apiKeyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deletePet_apiKey").hide();
+
+                $("#node-input-deletePet_petId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deletePet_petIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deletePet_petId").hide();
+
+                $("#node-input-uploadFile_petId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-uploadFile_petIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#uploadFile_petId").hide();
+
+                $("#node-input-uploadFile_additionalMetadata").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-uploadFile_additionalMetadataType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#uploadFile_additionalMetadata").hide();
+
+                $("#node-input-uploadFile_file").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-uploadFile_fileType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#uploadFile_file").hide();
+
+                $("#node-input-placeOrder_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-placeOrder_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#placeOrder_body").hide();
+
+                $("#node-input-getOrderById_orderId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getOrderById_orderIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getOrderById_orderId").hide();
+
+                $("#node-input-deleteOrder_orderId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteOrder_orderIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteOrder_orderId").hide();
+
+                $("#node-input-createUser_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createUser_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createUser_body").hide();
+
+                $("#node-input-createUsersWithArrayInput_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createUsersWithArrayInput_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createUsersWithArrayInput_body").hide();
+
+                $("#node-input-createUsersWithListInput_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createUsersWithListInput_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createUsersWithListInput_body").hide();
+
+                $("#node-input-loginUser_username").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-loginUser_usernameType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#loginUser_username").hide();
+
+                $("#node-input-loginUser_password").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-loginUser_passwordType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#loginUser_password").hide();
+
+                $("#node-input-getUserByName_username").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getUserByName_usernameType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getUserByName_username").hide();
+
+                $("#node-input-updateUser_username").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updateUser_usernameType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updateUser_username").hide();
+
+                $("#node-input-updateUser_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-updateUser_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#updateUser_body").hide();
+
+                $("#node-input-deleteUser_username").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteUser_usernameType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteUser_username").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'addPet') {
+
+                }
+                if ($("#node-input-method").val() === 'updatePet') {
+
+                }
+                if ($("#node-input-method").val() === 'findPetsByStatus') {
+
+                }
+                if ($("#node-input-method").val() === 'findPetsByTags') {
+
+                }
+                if ($("#node-input-method").val() === 'getPetById') {
+
+                }
+                if ($("#node-input-method").val() === 'updatePetWithForm') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'deletePet') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'uploadFile') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'getInventory') {
+
+                }
+                if ($("#node-input-method").val() === 'placeOrder') {
+
+                }
+                if ($("#node-input-method").val() === 'getOrderById') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteOrder') {
+
+                }
+                if ($("#node-input-method").val() === 'createUser') {
+
+                }
+                if ($("#node-input-method").val() === 'createUsersWithArrayInput') {
+
+                }
+                if ($("#node-input-method").val() === 'createUsersWithListInput') {
+
+                }
+                if ($("#node-input-method").val() === 'loginUser') {
+
+                }
+                if ($("#node-input-method").val() === 'logoutUser') {
+
+                }
+                if ($("#node-input-method").val() === 'getUserByName') {
+
+                }
+                if ($("#node-input-method").val() === 'updateUser') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteUser') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'addPet') {
+
+                    }
+                    if ($("#node-input-method").val() === 'updatePet') {
+
+                    }
+                    if ($("#node-input-method").val() === 'findPetsByStatus') {
+
+                        $("#findPetsByStatus_status").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'findPetsByTags') {
+
+                        $("#findPetsByTags_tags").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getPetById') {
+
+                        $("#getPetById_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'updatePetWithForm') {
+
+                        $("#updatePetWithForm_petId").show();
+                        
+                        $("#updatePetWithForm_name").show();
+                        
+                        $("#updatePetWithForm_status").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deletePet') {
+
+                        $("#deletePet_apiKey").show();
+                        
+                        $("#deletePet_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'uploadFile') {
+
+                        $("#uploadFile_petId").show();
+                        
+                        $("#uploadFile_additionalMetadata").show();
+                        
+                        $("#uploadFile_file").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getInventory') {
+
+                    }
+                    if ($("#node-input-method").val() === 'placeOrder') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getOrderById') {
+
+                        $("#getOrderById_orderId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteOrder') {
+
+                        $("#deleteOrder_orderId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'createUser') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createUsersWithArrayInput') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createUsersWithListInput') {
+
+                    }
+                    if ($("#node-input-method").val() === 'loginUser') {
+
+                        $("#loginUser_username").show();
+                        
+                        $("#loginUser_password").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'logoutUser') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getUserByName') {
+
+                        $("#getUserByName_username").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'updateUser') {
+
+                        $("#updateUser_username").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteUser') {
+
+                        $("#deleteUser_username").show();
+                        
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'addPet') {
+
+                    }
+                    if ($("#node-input-method").val() === 'updatePet') {
+
+                    }
+                    if ($("#node-input-method").val() === 'findPetsByStatus') {
+
+                        $("#findPetsByStatus_status").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'findPetsByTags') {
+
+                        $("#findPetsByTags_tags").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getPetById') {
+
+                        $("#getPetById_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'updatePetWithForm') {
+
+                        $("#updatePetWithForm_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deletePet') {
+
+                        $("#deletePet_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'uploadFile') {
+
+                        $("#uploadFile_petId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'getInventory') {
+
+                    }
+                    if ($("#node-input-method").val() === 'placeOrder') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getOrderById') {
+
+                        $("#getOrderById_orderId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteOrder') {
+
+                        $("#deleteOrder_orderId").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'createUser') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createUsersWithArrayInput') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createUsersWithListInput') {
+
+                    }
+                    if ($("#node-input-method").val() === 'loginUser') {
+
+                        $("#loginUser_username").show();
+                        
+                        $("#loginUser_password").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'logoutUser') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getUserByName') {
+
+                        $("#getUserByName_username").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'updateUser') {
+
+                        $("#updateUser_username").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'deleteUser') {
+
+                        $("#deleteUser_username").show();
+                        
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="swagger-petstore">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="SwaggerPetstore.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="SwaggerPetstore.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="addPet" data-i18n="SwaggerPetstore.parameters.addPet"></option>
+            <option value="updatePet" data-i18n="SwaggerPetstore.parameters.updatePet"></option>
+            <option value="findPetsByStatus" data-i18n="SwaggerPetstore.parameters.findPetsByStatus"></option>
+            <option value="findPetsByTags" data-i18n="SwaggerPetstore.parameters.findPetsByTags"></option>
+            <option value="getPetById" data-i18n="SwaggerPetstore.parameters.getPetById"></option>
+            <option value="updatePetWithForm" data-i18n="SwaggerPetstore.parameters.updatePetWithForm"></option>
+            <option value="deletePet" data-i18n="SwaggerPetstore.parameters.deletePet"></option>
+            <option value="uploadFile" data-i18n="SwaggerPetstore.parameters.uploadFile"></option>
+            <option value="getInventory" data-i18n="SwaggerPetstore.parameters.getInventory"></option>
+            <option value="placeOrder" data-i18n="SwaggerPetstore.parameters.placeOrder"></option>
+            <option value="getOrderById" data-i18n="SwaggerPetstore.parameters.getOrderById"></option>
+            <option value="deleteOrder" data-i18n="SwaggerPetstore.parameters.deleteOrder"></option>
+            <option value="createUser" data-i18n="SwaggerPetstore.parameters.createUser"></option>
+            <option value="createUsersWithArrayInput" data-i18n="SwaggerPetstore.parameters.createUsersWithArrayInput"></option>
+            <option value="createUsersWithListInput" data-i18n="SwaggerPetstore.parameters.createUsersWithListInput"></option>
+            <option value="loginUser" data-i18n="SwaggerPetstore.parameters.loginUser"></option>
+            <option value="logoutUser" data-i18n="SwaggerPetstore.parameters.logoutUser"></option>
+            <option value="getUserByName" data-i18n="SwaggerPetstore.parameters.getUserByName"></option>
+            <option value="updateUser" data-i18n="SwaggerPetstore.parameters.updateUser"></option>
+            <option value="deleteUser" data-i18n="SwaggerPetstore.parameters.deleteUser"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="SwaggerPetstore.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="addPet_body">
+        <label for="node-input-addPet_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-addPet_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-addPet_bodyType">
+    </div>
+
+    <div class="form-row" id="updatePet_body">
+        <label for="node-input-updatePet_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-updatePet_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-updatePet_bodyType">
+    </div>
+
+    <div class="form-row" id="findPetsByStatus_status">
+        <label for="node-input-findPetsByStatus_status"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.status"></span></label>
+
+        <input type="text" id="node-input-findPetsByStatus_status" placeholder="Status values that need to be considered for filter" style="width:70%">
+        <input type="hidden" id="node-input-findPetsByStatus_statusType">
+    </div>
+
+    <div class="form-row" id="findPetsByTags_tags">
+        <label for="node-input-findPetsByTags_tags"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.tags"></span></label>
+
+        <input type="text" id="node-input-findPetsByTags_tags" placeholder="Tags to filter by" style="width:70%">
+        <input type="hidden" id="node-input-findPetsByTags_tagsType">
+    </div>
+
+    <div class="form-row" id="getPetById_petId">
+        <label for="node-input-getPetById_petId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.petId"></span></label>
+
+        <input type="text" id="node-input-getPetById_petId" placeholder="ID of pet to return" style="width:70%">
+        <input type="hidden" id="node-input-getPetById_petIdType">
+    </div>
+
+    <div class="form-row" id="updatePetWithForm_petId">
+        <label for="node-input-updatePetWithForm_petId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.petId"></span></label>
+
+        <input type="text" id="node-input-updatePetWithForm_petId" placeholder="ID of pet that needs to be updated" style="width:70%">
+        <input type="hidden" id="node-input-updatePetWithForm_petIdType">
+    </div>
+
+    <div class="form-row" id="updatePetWithForm_name">
+        <label for="node-input-updatePetWithForm_name"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.name"></span></label>
+
+        <input type="text" id="node-input-updatePetWithForm_name" placeholder="Updated name of the pet" style="width:70%">
+        <input type="hidden" id="node-input-updatePetWithForm_nameType">
+    </div>
+
+    <div class="form-row" id="updatePetWithForm_status">
+        <label for="node-input-updatePetWithForm_status"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.status"></span></label>
+
+        <input type="text" id="node-input-updatePetWithForm_status" placeholder="Updated status of the pet" style="width:70%">
+        <input type="hidden" id="node-input-updatePetWithForm_statusType">
+    </div>
+
+    <div class="form-row" id="deletePet_apiKey">
+        <label for="node-input-deletePet_apiKey"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.apiKey"></span></label>
+
+        <input type="text" id="node-input-deletePet_apiKey" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-deletePet_apiKeyType">
+    </div>
+
+    <div class="form-row" id="deletePet_petId">
+        <label for="node-input-deletePet_petId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.petId"></span></label>
+
+        <input type="text" id="node-input-deletePet_petId" placeholder="Pet id to delete" style="width:70%">
+        <input type="hidden" id="node-input-deletePet_petIdType">
+    </div>
+
+    <div class="form-row" id="uploadFile_petId">
+        <label for="node-input-uploadFile_petId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.petId"></span></label>
+
+        <input type="text" id="node-input-uploadFile_petId" placeholder="ID of pet to update" style="width:70%">
+        <input type="hidden" id="node-input-uploadFile_petIdType">
+    </div>
+
+    <div class="form-row" id="uploadFile_additionalMetadata">
+        <label for="node-input-uploadFile_additionalMetadata"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.additionalMetadata"></span></label>
+
+        <input type="text" id="node-input-uploadFile_additionalMetadata" placeholder="Additional data to pass to server" style="width:70%">
+        <input type="hidden" id="node-input-uploadFile_additionalMetadataType">
+    </div>
+
+    <div class="form-row" id="uploadFile_file">
+        <label for="node-input-uploadFile_file"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.file"></span></label>
+
+        <input type="text" id="node-input-uploadFile_file" placeholder="file to upload" style="width:70%">
+        <input type="hidden" id="node-input-uploadFile_fileType">
+    </div>
+
+    <div class="form-row" id="placeOrder_body">
+        <label for="node-input-placeOrder_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-placeOrder_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-placeOrder_bodyType">
+    </div>
+
+    <div class="form-row" id="getOrderById_orderId">
+        <label for="node-input-getOrderById_orderId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.orderId"></span></label>
+
+        <input type="text" id="node-input-getOrderById_orderId" placeholder="ID of pet that needs to be fetched" style="width:70%">
+        <input type="hidden" id="node-input-getOrderById_orderIdType">
+    </div>
+
+    <div class="form-row" id="deleteOrder_orderId">
+        <label for="node-input-deleteOrder_orderId"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.orderId"></span></label>
+
+        <input type="text" id="node-input-deleteOrder_orderId" placeholder="ID of the order that needs to be deleted" style="width:70%">
+        <input type="hidden" id="node-input-deleteOrder_orderIdType">
+    </div>
+
+    <div class="form-row" id="createUser_body">
+        <label for="node-input-createUser_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createUser_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createUser_bodyType">
+    </div>
+
+    <div class="form-row" id="createUsersWithArrayInput_body">
+        <label for="node-input-createUsersWithArrayInput_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createUsersWithArrayInput_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createUsersWithArrayInput_bodyType">
+    </div>
+
+    <div class="form-row" id="createUsersWithListInput_body">
+        <label for="node-input-createUsersWithListInput_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createUsersWithListInput_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createUsersWithListInput_bodyType">
+    </div>
+
+    <div class="form-row" id="loginUser_username">
+        <label for="node-input-loginUser_username"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.username"></span></label>
+
+        <input type="text" id="node-input-loginUser_username" placeholder="The user name for login" style="width:70%">
+        <input type="hidden" id="node-input-loginUser_usernameType">
+    </div>
+
+    <div class="form-row" id="loginUser_password">
+        <label for="node-input-loginUser_password"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.password"></span></label>
+
+        <input type="text" id="node-input-loginUser_password" placeholder="The password for login in clear text" style="width:70%">
+        <input type="hidden" id="node-input-loginUser_passwordType">
+    </div>
+
+    <div class="form-row" id="getUserByName_username">
+        <label for="node-input-getUserByName_username"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.username"></span></label>
+
+        <input type="text" id="node-input-getUserByName_username" placeholder="The name that needs to be fetched. Use user1 for testing. " style="width:70%">
+        <input type="hidden" id="node-input-getUserByName_usernameType">
+    </div>
+
+    <div class="form-row" id="updateUser_username">
+        <label for="node-input-updateUser_username"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.username"></span></label>
+
+        <input type="text" id="node-input-updateUser_username" placeholder="name that need to be updated" style="width:70%">
+        <input type="hidden" id="node-input-updateUser_usernameType">
+    </div>
+
+    <div class="form-row" id="updateUser_body">
+        <label for="node-input-updateUser_body"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.body"></span></label>
+
+        <input type="text" id="node-input-updateUser_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-updateUser_bodyType">
+    </div>
+
+    <div class="form-row" id="deleteUser_username">
+        <label for="node-input-deleteUser_username"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.parameters.username"></span></label>
+
+        <input type="text" id="node-input-deleteUser_username" placeholder="The name that needs to be deleted" style="width:70%">
+        <input type="hidden" id="node-input-deleteUser_usernameType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="swagger-petstore">
+
+    <p>This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.</p>
+    <h2>Methods</h2>
+        <h3>addPet</h3>
+        <h4>Add a new pet to the store</h4>
+        <h3>updatePet</h3>
+        <h4>Update an existing pet</h4>
+        <h3>findPetsByStatus</h3>
+        <h4>Multiple status values can be provided with comma separated strings</h4>
+        <h3>findPetsByTags</h3>
+        <h4>Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.</h4>
+        <h3>getPetById</h3>
+        <h4>Returns a single pet</h4>
+        <h3>updatePetWithForm</h3>
+        <h4>Updates a pet in the store with form data</h4>
+        <h3>deletePet</h3>
+        <h4>Deletes a pet</h4>
+        <h3>uploadFile</h3>
+        <h4>uploads an image</h4>
+        <h3>getInventory</h3>
+        <h4>Returns a map of status codes to quantities</h4>
+        <h3>placeOrder</h3>
+        <h4>Place an order for a pet</h4>
+        <h3>getOrderById</h3>
+        <h4>For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions</h4>
+        <h3>deleteOrder</h3>
+        <h4>For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors</h4>
+        <h3>createUser</h3>
+        <h4>This can only be done by the logged in user.</h4>
+        <h3>createUsersWithArrayInput</h3>
+        <h4>Creates list of users with given input array</h4>
+        <h3>createUsersWithListInput</h3>
+        <h4>Creates list of users with given input array</h4>
+        <h3>loginUser</h3>
+        <h4>Logs user into the system</h4>
+        <h3>logoutUser</h3>
+        <h4>Logs out current logged in user session</h4>
+        <h3>getUserByName</h3>
+        <h4>Get user by user name</h4>
+        <h3>updateUser</h3>
+        <h4>This can only be done by the logged in user.</h4>
+        <h3>deleteUser</h3>
+        <h4>This can only be done by the logged in user.</h4>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('swagger-petstore-service', {
+        category: 'config',
+        defaults: {
+
+            secureTokenHeaderOrQueryName: { value: "" },
+            secureTokenIsQuery: { value: false },
+            secureApiKeyHeaderOrQueryName: { value: "" },
+            secureApiKeyIsQuery: { value: false },
+
+            name: { value: "" },
+        },
+        credentials: {
+            secureTokenValue: { type:"password" },
+            secureApiKeyValue: { type:"password" },
+            temp: { type:"text" }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+            $('#node-config-input-secureTokenHeaderOrQueryName-label').hide();
+            $('#node-config-input-secureTokenHeaderOrQueryName').hide();
+            $('#node-config-input-secureTokenValue-label').hide();
+            $('#node-config-input-secureTokenValue').hide();
+
+            $('#node-config-input-secureTokenIsQuery-label').hide();
+            $('#node-config-input-secureTokenIsQuery').hide();
+            var selected = $('#node-config-input-secureTokenIsQuery option:selected');
+            if (!selected.val()) {
+                $('#node-config-input-secureTokenIsQuery').val('false');
+            }
+            $('#node-config-input-secureApiKeyIsQuery-label').hide();
+            $('#node-config-input-secureApiKeyIsQuery').hide();
+            var selected = $('#node-config-input-secureApiKeyIsQuery option:selected');
+            if (!selected.val()) {
+                $('#node-config-input-secureApiKeyIsQuery').val(false);
+            }
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="swagger-petstore-service">
+
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyHeaderOrQueryName-label" for="node-config-input-secureApiKeyHeaderOrQueryName"><i class="fa fa-list"></i> <span data-i18n="SwaggerPetstore.label.header"></span></label>
+        <input type="text" id="node-config-input-secureApiKeyHeaderOrQueryName" placeholder="">
+    </div>
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyValue-label" for="node-config-input-secureApiKeyValue"><i class="fa fa-lock"></i> <span data-i18n="SwaggerPetstore.label.value"></span></label>
+        <input type="password" id="node-config-input-secureApiKeyValue" placeholder="">
+    </div>
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyIsQuery-label" for="node-config-input-secureApiKeyIsQuery"><i class="fa fa-dot-circle-o"></i> <span data-i18n="SwaggerPetstore.label.isQuery"></span></label>
+        <select id="node-config-input-secureApiKeyIsQuery">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="swagger-petstore-service">
+
+    <p><b>Header</b>: Variable name to set token</p>
+    <p><b>Value</b>: Value of token</p>
+    <p><b>Header</b>: Variable name to set API key</p>
+    <p><b>Value</b>: Value of API key</p>
+</script>

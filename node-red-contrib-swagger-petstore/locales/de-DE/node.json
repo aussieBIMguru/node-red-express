@@ -1,0 +1,49 @@
+{
+    "SwaggerPetstore": {
+        "label": {
+            "service": "Service",
+            "method": "Methode",
+            "host": "Host",
+            "header": "Header",
+            "value": "Wert",
+            "isQuery": "Suchanfrage"
+        },
+        "status": {
+            "requesting": "Anfrage..."
+        },
+        "parameters": {
+            "addPet": "addPet",
+            "body": "body",
+            "updatePet": "updatePet",
+            "findPetsByStatus": "findPetsByStatus",
+            "status": "status",
+            "findPetsByTags": "findPetsByTags",
+            "tags": "tags",
+            "getPetById": "getPetById",
+            "petId": "petId",
+            "updatePetWithForm": "updatePetWithForm",
+            "name": "name",
+            "deletePet": "deletePet",
+            "apiKey": "apiKey",
+            "uploadFile": "uploadFile",
+            "additionalMetadata": "additionalMetadata",
+            "file": "file",
+            "getInventory": "getInventory",
+            "placeOrder": "placeOrder",
+            "getOrderById": "getOrderById",
+            "orderId": "orderId",
+            "deleteOrder": "deleteOrder",
+            "createUser": "createUser",
+            "createUsersWithArrayInput": "createUsersWithArrayInput",
+            "createUsersWithListInput": "createUsersWithListInput",
+            "loginUser": "loginUser",
+            "username": "username",
+            "password": "password",
+            "logoutUser": "logoutUser",
+            "getUserByName": "getUserByName",
+            "updateUser": "updateUser",
+            "deleteUser": "deleteUser",
+            "optionalParameters": "Optionen"
+        }
+    }
+}

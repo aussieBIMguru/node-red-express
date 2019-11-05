@@ -483,6 +483,24 @@
      "file": "/home/bigdoods/projects/nr-base-dev-env/node_modules/node-red-node-base64/70-base64.js"
     }
    }
+  },
+  "node-red-contrib-swagger-petstore": {
+   "name": "node-red-contrib-swagger-petstore",
+   "version": "1.0.0",
+   "local": false,
+   "nodes": {
+    "swagger-petstore": {
+     "name": "swagger-petstore",
+     "types": [
+      "swagger-petstore",
+      "swagger-petstore-service"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-swagger-petstore",
+     "file": "/home/bigdoods/projects/nr-base-dev-env/node_modules/node-red-contrib-swagger-petstore/node.js"
+    }
+   }
   }
  },
  "_credentialSecret": "b4776bcd9605c817fcc72b0f877ae50c86902776792f17d404b889ac4827b6d1",
@@ -499,7 +517,7 @@
     }
    },
    "menu-menu-item-sidebar": true,
-   "menu-menu-item-palette": false
+   "menu-menu-item-palette": true
   }
  }
 }
