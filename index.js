@@ -23,9 +23,12 @@ function getSettings(envs){
   }
 }
 
+// REMOVE (IF STRAY)
+//     // "SHAREPOINT_SCOPE" : "openid%20offline_access%20https%3A%2F%2Fgraph.microsoft.com%2Fuser.read",
+
 function startNR(settings) {
   console.log(`[INFO] Global settings for Node-Red: ${JSON.stringify(settings.functionGlobalContext)}`)
-  const port = 8001
+  const port = 8000
 
   RED.init(server, settings)
 

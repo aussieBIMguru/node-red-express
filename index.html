@@ -1,0 +1,109 @@
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+    <meta charset="utf-8">
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css">
+
+    <!-- Developer CSS -->
+    <style>
+        body {
+            margin: 0;
+        }
+        #MyViewerDiv {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background-color: #F0F8FF;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Viewer will be instantiated here -->
+    <div id="MyViewerDiv"></div>
+
+    <!-- The Viewer JS -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/viewer3D.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/webvr-polyfill@latest/build/webvr-polyfill.js"></script>
+    
+    <!-- Developer JS -->
+    <script>
+	var viewer;
+    var options = {
+        env: 'AutodeskProduction',
+        // Enter access_token value from Postman authenticate(2-legged) response
+        accessToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6Imp3dF9zeW1tZXRyaWNfa2V5In0.eyJ1c2VyaWQiOiI4RVlUUU01NjRDVVEiLCJleHAiOjE1NzIwOTUyMDgsInNjb3BlIjpbImRhdGE6Y3JlYXRlIiwiZGF0YTp3cml0ZSIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiXSwiY2xpZW50X2lkIjoiZTNJM0RJMEx0VzFLcGdLaUJZcEdwR01XRFphTmxBZEwiLCJncmFudF9pZCI6InBPMnVFVEFxUnl1Q01pUU9DQzdmTXVNMkEyYjhoWVN0IiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2p3dGV4cDYwIiwianRpIjoidERDMGFKaDhzaUdmcVFxdUluMjlGdVhxcVZNU1FoVHdRS0ZvdENsaUw3TkFSejVwVlNYWVp3NUZoaXBndmk2OSJ9.4N3g2zipBntACc5VDzuJrCUx8aqqW3gZqjULABKzscA'
+    };
+    var documentId = 'urn:dXJuOmFkc2sud2lwcHJvZDpmcy5maWxlOnZmLjNleEk1R3dlUWNDZHcyYS1fVmJxQXc_dmVyc2lvbj0x'; // var documentId = 'urn:<sourceURN>'
+
+    Autodesk.Viewing.Initializer(options, function onInitialized(){
+        Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    });
+
+    var loadStaticView = (viewer) => {
+        // viewer
+    } 
+        /**
+        * Autodesk.Viewing.Document.load() success callback.
+        * Proceeds with model initialization.
+        */
+        function onDocumentLoadSuccess(doc) {
+
+            // A document contains references to 3D and 2D viewables.
+            var viewables = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {'type':'geometry'}, true);
+            if (viewables.length === 0) {
+                console.error('Document contains no viewables.');
+                return;
+            }
+
+            // Choose any of the available viewables
+            var initialViewable = viewables[0];
+            var svfUrl = doc.getViewablePath(initialViewable);
+            var modelOptions = {
+                sharedPropertyDbPath: doc.getPropertyDbPath()
+            };
+
+            var viewerDiv = document.getElementById('MyViewerDiv');
+            var config = {
+                extensions: ['Autodesk.Viewing.WebVR'],
+                experimental: [ 'webVR_orbitModel' ]
+            };
+        
+            viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv, config);
+            viewer.start(svfUrl, modelOptions, onLoadModelSuccess, onLoadModelError);
+            
+            // Add viewer event listener
+            viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, (event) => {
+                loadStaticView(viewer);
+            })
+        }
+
+        /**
+         * Autodesk.Viewing.Document.load() failuire callback.
+         */
+        function onDocumentLoadFailure(viewerErrorCode) {
+            console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+        }
+
+        /**
+         * viewer.loadModel() success callback.
+         * Invoked after the model's SVF has been initially loaded.
+         * It may trigger before any geometry has been downloaded and displayed on-screen.
+         */
+        function onLoadModelSuccess(model) {
+            console.log('onLoadModelSuccess()!');
+            console.log('Validate model loaded: ' + (viewer.model === model));
+            console.log(model);
+        }
+
+        /**
+         * viewer.loadModel() failure callback.
+         * Invoked when there's an error fetching the SVF file.
+         */
+        function onLoadModelError(viewerErrorCode) {
+            console.error('onLoadModelError() - errorCode:' + viewerErrorCode);
+        }
+
+    </script>
+</body>
