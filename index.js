@@ -1,4 +1,6 @@
 const http = require('http')
+const path = require('path')
+
 const express = require('express')
 const RED = require('node-red')
 
@@ -19,7 +21,17 @@ function getSettings(envs){
       // Spread operator used as shorthand for including Vars from bl-config file
       ...envs.env
       
-    }
+    },
+    editorTheme: {
+      page: {
+        css: path.join(__dirname, "/ui-styles/midnight.css"),
+        scripts: path.join(__dirname, "/ui-styles/theme-tomorrow.js")
+      },
+      palette: {
+          editable: false
+      }
+    },
+    paletteCategories: ['subflows', 'Procore', 'Aconex', 'Mainframe', 'input', 'output', 'function', 'storage']
   }
 }
 
